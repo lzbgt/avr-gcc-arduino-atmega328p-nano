@@ -59,4 +59,4 @@ Both do their jobs good.
 3. https://www.arduino.cc/en/Guide/ArduinoNano
 4. https://predictabledesigns.com/atmega-versus-stm32-which-microcontroller-is-best-for-your-application/
 5. http://ww1.microchip.com/downloads/en/appnotes/atmel-42787-avr-software-user-guide_applicationnote_avr42787.pdf
-6.
+6. https://makefiletutorial.com/
