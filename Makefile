@@ -19,7 +19,7 @@ objects := $(patsubst %.c,%.o,$(wildcard *.c))
 
 all: a.out main.hex
 
-flash: main.hex Makefile
+flash: main.hex
 		# -C for specifing the configuration file
 		# -c for programmer i.g SKII, STK500 ISP, here uses arduino
 		# -p for target chip model, avr-gcc --target-help for more info
@@ -30,7 +30,7 @@ flash: main.hex Makefile
 main.hex: a.out
 		avr-objcopy -O ihex -R .eeprom a.out main.hex
 
-a.out: $(objects)
+a.out: $(objects) Makefile
 		$(CC) $(CFLAGS) $(objects) -o a.out
 
 .PHONY: clean

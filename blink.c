@@ -13,7 +13,7 @@ int main(void) {
         **Set to HIGH the pin 13 */
         PORTB |= _BV(PORTB5);
 
-        /*Wait 3000 ms */
+        /*Wait 500 ms */
         _delay_ms(MS_DELAY);
 
         /*Set to zero the fifth bit of PORTB
