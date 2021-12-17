@@ -1,7 +1,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define MS_DELAY 3000
+#define MS_DELAY 500
 
 int main(void) {
     /*Set to one the fifth bit of DDRB to one

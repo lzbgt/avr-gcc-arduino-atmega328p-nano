@@ -17,6 +17,8 @@ objects := $(patsubst %.c,%.o,$(wildcard *.c))
 # %.o: %.c
 # 	$(CC) -Os -DF_CPU=16000000UL -mmcu=atmega328p -c $<
 
+all: a.out main.hex
+
 flash: main.hex Makefile
 		# -C for specifing the configuration file
 		# -c for programmer i.g SKII, STK500 ISP, here uses arduino
@@ -31,5 +33,6 @@ main.hex: a.out
 a.out: $(objects)
 		$(CC) $(CFLAGS) $(objects) -o a.out
 
+.PHONY: clean
 clean:
 		rm -f *.o *.out main *.hex

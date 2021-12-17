@@ -52,11 +52,11 @@ It depends on the application itself to choose AVR or STM32
 
 Both do their jobs good.
 
-
-
 ## Refs
 
 1. https://create.arduino.cc/projecthub/milanistef/introduction-to-bare-metal-programming-in-arduino-uno-f3e2b4
 2. https://www.arduino.cc/en/Tutorial/BuiltInExamples/ArduinoToBreadboard
 3. https://www.arduino.cc/en/Guide/ArduinoNano
 4. https://predictabledesigns.com/atmega-versus-stm32-which-microcontroller-is-best-for-your-application/
+5. http://ww1.microchip.com/downloads/en/appnotes/atmel-42787-avr-software-user-guide_applicationnote_avr42787.pdf
+6.
