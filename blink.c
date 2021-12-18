@@ -6,22 +6,24 @@
 
 volatile uint8_t flag = 0;
 
+#define LED_OFF PORTB &= ~_BV(PORTB5)
+#define LED_ON PORTB |= _BV(PORTB5)
+
 void toggle_led() {
     // on -> off
-    if (PORTB & _BV(PORTB5)) {
-        PORTB &= ~_BV(PORTB5);
+    if (PINB & _BV(PB5)) {
+        LED_OFF;
     } else {
         // off -> on
-        PORTB |= _BV(PORTB5);
+        LED_ON;
     }
 }
 
 ISR(PCINT0_vect) {
-    // PINC reads high, flag get 1, otherwise flag get 0
-    // if (PINC & _BV(PC1)) flag = 1 - flag;
-    flag = 1 - flag;
-
-    toggle_led();
+    if (PINB & _BV(PB1)) {
+        toggle_led();
+    }
+    _delay_ms(200);
 }
 
 #define MS_DELAY 300
@@ -31,6 +33,7 @@ ISR(PCINT0_vect) {
 int main(void) {
     DDRB = 0;   // all PB0 - PB7 defaults to input only
     PORTB = 1;  // all PB0 -PB7 initial HIGH
+    PINB = 1;   // all input pulled up
     // set LED PB5 output mode
     DDRB |= _BV(DDB5);
 
