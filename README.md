@@ -55,8 +55,13 @@ Both do their jobs good.
 ## Refs
 
 1. https://create.arduino.cc/projecthub/milanistef/introduction-to-bare-metal-programming-in-arduino-uno-f3e2b4
-2. https://www.arduino.cc/en/Tutorial/BuiltInExamples/ArduinoToBreadboard
-3. https://www.arduino.cc/en/Guide/ArduinoNano
-4. https://predictabledesigns.com/atmega-versus-stm32-which-microcontroller-is-best-for-your-application/
-5. http://ww1.microchip.com/downloads/en/appnotes/atmel-42787-avr-software-user-guide_applicationnote_avr42787.pdf
-6. https://makefiletutorial.com/
+2. https://upload.wikimedia.org/wikipedia/commons/e/e4/Arduino-nano-pinout.png
+3. https://www.arduino.cc/en/Tutorial/BuiltInExamples/ArduinoToBreadboard
+4. https://www.arduino.cc/en/Guide/ArduinoNano
+5. https://predictabledesigns.com/atmega-versus-stm32-which-microcontroller-is-best-for-your-application/
+6. http://ww1.microchip.com/downloads/en/appnotes/atmel-42787-avr-software-user-guide_applicationnote_avr42787.pdf
+7. https://makefiletutorial.com/
+8. https://microchipdeveloper.com/8avr:interrupts-mega-configuration
+9. datasheet https://ww1.microchip.com/downloads/en/DeviceDoc/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061B.pdf
+10. https://microchipdeveloper.com/8avr:pin-change-interrupts
+11. https://www.nongnu.org/avr-libc/

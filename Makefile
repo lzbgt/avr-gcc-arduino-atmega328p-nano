@@ -9,7 +9,7 @@ endif
 
 CC:=avr-gcc
 CFLAGS:=-Os -DF_CPU=16000000UL -mmcu=atmega328p
-PORT:=COM3 # /dev/ttyXXX for linux or macosx
+PORT:=COM4 # /dev/ttyXXX for linux or macosx
 
 # rule for compiling all .c
 objects := $(patsubst %.c,%.o,$(wildcard *.c))
