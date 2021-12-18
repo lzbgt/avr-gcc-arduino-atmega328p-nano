@@ -8,6 +8,8 @@ volatile uint8_t flag = 0;
 
 #define LED_OFF PORTB &= ~_BV(PORTB5)
 #define LED_ON PORTB |= _BV(PORTB5)
+#define LED_TOGGLE PINB |= _BV(PINB5)
+#define INT_LOW !(PINB & _BV(PB1))
 
 void toggle_led() {
     // on -> off
@@ -17,13 +19,15 @@ void toggle_led() {
         // off -> on
         LED_ON;
     }
+    //
 }
 
 ISR(PCINT0_vect) {
-    if (PINB & _BV(PB1)) {
-        toggle_led();
+    if (INT_LOW) {
+        LED_ON;
+    } else {
+        LED_OFF;
     }
-    _delay_ms(200);
 }
 
 #define MS_DELAY 300
@@ -31,22 +35,13 @@ ISR(PCINT0_vect) {
 //const int data[] PROGMEM = {1, 2, 3, 4};
 
 int main(void) {
-    DDRB = 0;   // all PB0 - PB7 defaults to input only
-    PORTB = 1;  // all PB0 -PB7 initial HIGH
-    PINB = 1;   // all input pulled up
-    // set LED PB5 output mode
-    DDRB |= _BV(DDB5);
-
     // set PB1, PCINT1 input mode,
-    // DDRB1 = 0 and PORTB1=1, so PB1 is pulled-up
     DDRB &= ~_BV(DDB1);
+    DDRB |= _BV(DDB5);
 
     // use Pin Change Interrupt Request 1: PCINT1 - Pin13/PB1/PCINT1 input mode only
     // PCINT1 belongs to control bank PCIE0 (0:7) and mask bank PCMSK0
-    PCIFR = (1 << PCIF0);
-    PCMSK0 = 0;
     PCMSK0 |= _BV(PCINT1);
-    PCICR = 0;
     // enables pcint[0:7]
     PCICR |= _BV(PCIE0);
 
@@ -62,6 +57,6 @@ int main(void) {
         // }
 
         // /*Wait 300 ms */
-        _delay_ms(MS_DELAY);
+        //_delay_ms(MS_DELAY);
     }
 }
