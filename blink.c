@@ -1,6 +1,7 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <avr/pgmspace.h>
+#include <avr/sleep.h>
 #include <util/atomic.h>
 #include <util/delay.h>
 
@@ -39,6 +40,9 @@ int main(void) {
     DDRB &= ~_BV(DDB1);
     DDRB |= _BV(DDB5);
 
+    PRR = 0xFF;
+    set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+
     // use Pin Change Interrupt Request 1: PCINT1 - Pin13/PB1/PCINT1 input mode only
     // PCINT1 belongs to control bank PCIE0 (0:7) and mask bank PCMSK0
     PCMSK0 |= _BV(PCINT1);
@@ -58,5 +62,6 @@ int main(void) {
 
         // /*Wait 300 ms */
         //_delay_ms(MS_DELAY);
+        sleep_mode();
     }
 }
