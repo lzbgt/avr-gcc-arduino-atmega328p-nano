@@ -1,5 +1,11 @@
 # coding AVR with avr-gcc
 
+## TODO:
+
+[ ] fully impementation (during my learning process)
+
+[ ] documents, maybe a guide book?
+
 ## Makefile
 
 ```makefile
