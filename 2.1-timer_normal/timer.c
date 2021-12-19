@@ -12,10 +12,7 @@
  * sts OCR2A,r16 ; Set output compare value to 32
  * 
  * TOV = Fck/(Prescaler * (2^(res-1))) = Fck/p/255/2 => 30Hz, assuming the max prescaler is used (1024) and 16MHz system clock,
- * the result longest piroid is about 33ms it is too short for LED blinking.
- * 
- * So we need to Accumuate TOV in ISR to devide TOV frequency futher.
- * 
+ * the longest piroid is about 33ms which is too short for LED blinking, thus we need to accumuate TOVs in ISR to devide futher.
  * 
  * @version 0.1
  * @date 2021-12-19
