@@ -1,7 +1,7 @@
 /**
  * @file timer.c
  * @author Bruce.Lu (lzbgt@icloud.com)
- * @brief timer normal mode to toggle LED
+ * @brief timer normal mode to toggle LED. NOTE: DON'T do this in production, it's NOT CPU efficient!
  * 
  * As the application note 'atmel-2505' states, timer can be configurated to toggle GPIO pin directly
  * 
