@@ -4,13 +4,16 @@
             "name": "AVR",
             "includePath": [
                 "${workspaceFolder}/**",
-                "c:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include",
-                "c:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/**"
+                "/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include",
+                "/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include/**"
             ],
             "defines": [
                 "__AVR_ATmega328P__"
             ],
-            "compilerPath": "c:\\Program Files (x86)\\Arduino\\hardware\\tools\\avr\\bin\\avr-gcc.exe"
+            "compilerPath": "/Applications/Arduino.app/Contents/Java/hardware/tools/avr/bin/avr-gcc",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "mergeConfigurations": true
         }
     ],
     "version": 4
