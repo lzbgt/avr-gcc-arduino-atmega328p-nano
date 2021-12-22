@@ -1,3 +1,8 @@
 {
-  "C_Cpp.errorSquiggles": "Disabled"
+    "files.associations": {
+        "interrupt.h": "c",
+        "io.h": "c",
+        "sleep.h": "c",
+        "delay.h": "c"
+    }
 }
