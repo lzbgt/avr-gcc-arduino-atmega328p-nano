@@ -63,17 +63,17 @@ int main(void) {
     // set PB5(LED) output mode
     DDRB |= _BV(DDB5);
 
+    // enable power saving
+    PRR = 0xFF;
+    set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+    sleep_enable();
+    sleep_bod_disable();
     // enable ISR
     sei();
 
     while (1) {
-        // enable power saving
-        PRR = 0xFF;
-        set_sleep_mode(SLEEP_MODE_PWR_DOWN);
-        sleep_enable();
-        sleep_bod_disable();
-        sei();
         sleep_cpu();
         sleep_disable();
+        sei();
     }
 }

@@ -30,6 +30,7 @@ flash: main.hex
 		# -b for searial boundrate, search keyword 'nano' in file 'Arduino/hardware/arduino/avr/boards.txt'
 		$(AVR_HOME)/bin/avrdude -F -V -C $(AVR_HOME)/etc/avrdude.conf -c arduino -p m328p -P $(PORT) -b 57600  -U flash:w:main.hex
 
+
 main.hex: a.out
 		$(AVR_HOME)/bin/avr-objcopy -O ihex -R .eeprom a.out main.hex
 
