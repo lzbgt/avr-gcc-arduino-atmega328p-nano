@@ -1,82 +1,49 @@
-/**
- * @file timer.c
- * @author Bruce.Lu (lzbgt@icloud.com)
- * @brief timer normal mode to toggle LED. NOTE: DON'T do this in production, it's NOT CPU efficient!
- * 
- * As the application note 'atmel-2505' states, timer can be configurated to toggle GPIO pin directly
- * 
- * ldi r16, (1<<COM2A1)|(1<<WGM21)|(1<<WGM20)
- * sts TCCR2A,r16 ; OC2A toggling on compare match/timer
- * ; Clock = system clock
- * ldi r16,32
- * sts OCR2A,r16 ; Set output compare value to 32
- * 
- * TOV = Fck/(Prescaler * (2^(res-1))) = Fck/p/255/2 => 30Hz, assuming the max prescaler is used (1024) and 16MHz system clock,
- * the longest piroid is about 33ms which is too short for LED blinking, thus we need to accumuate TOVs in ISR to devide futher.
- * 
- * @version 0.1
- * @date 2021-12-19
- * 
- * @copyright hubstack.cn (c) 2021
- * 
+/*
+ * GccApplication2.c
+ *
+ * Created: 2021/12/22 0:41:03
+ * Author : lzbgt
  */
 
+#define F_CPU 16000000UL
+#include <avr/delay.h>
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <avr/sleep.h>
-#include <util/delay.h>
 
-#define LED_OFF PORTB &= ~_BV(PORTB5)
-#define LED_ON PORTB |= _BV(PORTB5)
+#define LED_TOG PINB |= _BV(PB5)
 
-/*writing a logic one to a bit in the PINx Register, 
-will result in a toggle in the corresponding bit in the Data Register
-*/
-#define LED_TOGGLE PINB |= _BV(PINB5)
 
-uint8_t freq = F_CPU / 1024 / 256 / 2;  // 30
-
-// NOTE: the best resolution is 30Hz, about 33ms, so ms can't be less than 33
-uint16_t calc_scalar(uint16_t ms) {
-    if (ms < 33) {
-        ms = 33;
-    }
-    return ms * freq / 1000;
+int8_t TIMER_0_init()
+{
+    TCCR1B |= (1 << WGM12); //CTC
+    TCCR1B |= (1 << CS10) | (1 << CS12); //set the pre-scalar as 1024
+    TIFR1 |= 1 << TOV1;
+    OCR1A = 1562 * 10; 	   //1000ms delay
+    TIMSK1 = 0 << OCIE1B   /* Output Compare B Match Interrupt Enable: disabled */
+             | 1 << OCIE1A /* Output Compare A Match Interrupt Enable: disabled */
+             | 0 << ICIE1  /* Input Capture Interrupt Enable: disabled */
+             | 0 << TOIE1; /* Overflow Interrupt Enable: enabled */
 }
 
-volatile uint16_t scaler_ref = 33;
-volatile uint16_t scaler = 33;  //< holds up max period of 2184 seconds
-                                //< uint8_t can only hold up for 8 seconds.
-// Interrupt Service Routing
-ISR(TIMER0_OVF_vect) {
-    if (--scaler == 0) {
-        scaler = scaler_ref;
-        LED_TOGGLE;
-    }
+ISR(TIMER1_COMPA_vect)
+{
+    LED_TOG;
 }
 
-int main(void) {
-    scaler_ref = calc_scalar(1000);
-    scaler = scaler_ref;
-    /* Timer clock = I/O clock / 1024 */
-    TCCR0B = (1 << CS02) | (1 << CS00);
-    /* Clear overflow flag */
-    TIFR0 = 1 << TOV0;
-    /* Enable Overflow Interrupt */
-    TIMSK0 = 1 << TOIE0;
+int main(void)
+{
+    // // LED output mode
+    DDRB |= _BV(PB5);
 
-    // set PB5(LED) output mode
-    DDRB |= _BV(DDB5);
+    TIMER_0_init();
 
     // enable power saving
-    PRR = 0xFF & (~(_BV(PRTIM0) | (_BV(PRTWI))));
+    PRR = 0xFF & (~(_BV(PRTIM1) | (_BV(PRTWI))));
     set_sleep_mode(SLEEP_MODE_IDLE);
     sleep_enable();
     sleep_bod_disable();
-
-    // enable ISR
     sei();
-
     while (1) {
         sleep_cpu();
         sleep_disable();
