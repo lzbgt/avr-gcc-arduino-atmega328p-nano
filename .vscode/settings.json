@@ -3,6 +3,7 @@
         "interrupt.h": "c",
         "io.h": "c",
         "sleep.h": "c",
-        "delay.h": "c"
+        "delay.h": "c",
+        "setbaud.h": "c"
     }
 }
