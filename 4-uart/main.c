@@ -26,13 +26,13 @@ int main()
         while(uartint_receive(&c))
             ;
         if (c == '\r') {
-            uartint_transmitBurst("\n\r>", 3);
             // TODO: emmit line
             uint8_t r1, r2;
             line[pos] = 0;
             char s[256] = {0};
             strcpy(s, line);
-            parse(s);
+            int r = parse(s);
+            printf("\n\rans> %d\n\r>", r);
             memset(line, 0, 256);
             pos = 0;
         }
@@ -41,6 +41,8 @@ int main()
             uartint_transmit(c);
         }
     }
+
+
 
     return 0;
 }

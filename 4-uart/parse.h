@@ -1,1 +1,1 @@
-extern void parse();
+extern int parse(char *str);
