@@ -106,11 +106,20 @@ int calc(void *arg, ...)
     }
 }
 
+int help(void*arg)
+{
+    (void)arg;
+    printf("\n\rsbi addr bit\n\rcbi addr bit\n\rcalc lhs op rhs\n\r>");
+    return 0;
+}
+
 static const CMD cmds[] = {
     {"cbi", 3, 2, "\x01\x01", cbi_wrap},
     {"sbi", 3, 2, "\x01\x01", sbi_wrap},
     {"led", 3, 0, "", toggle_led},
-    {"calc", 4, 3, "\x03\x03\x03", calc}
+    {"calc", 4, 3, "\x03\x03\x03", calc},
+    {"?", 1, 0, "", help},
+    {"h", 1, 0, "", help}
 };
 
 
@@ -174,6 +183,7 @@ int parse(char * str)
                     vals[j] = ptr2;
                 }
             }
+
             switch (cmds[i].params) {
             case 0:
                 r = cmds[i].function((void*)0);
